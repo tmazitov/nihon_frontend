@@ -6,6 +6,7 @@
         <div class="routes">
             <div class="route__item"
             v-for="route,index in routes"
+            @click="routerPush(route.pathName)"
             :key="`route_item_${index}`">
                 {{route.title}}
             </div>
@@ -14,26 +15,32 @@
 </template>
 
 <script>
+import router from '../../router'
+
+
+const routerPush = (pathName) => {
+    router.push({name: pathName})
+}
 
 const routes = [
     {
-        title: "About"
+        title: "About",
+        pathName: "about"  
     },
     {
-        title: "Dictionary"
+        title: "Dictionary",
+        pathName: "dictionary" 
     },
     {
-        title: "Check"
-    },
-    {
-        title: "Profile"
+        title: "Profile",
+        pathName: "profile"
     },
 ]
 
 export default {
     name: 'Header',
     setup() {
-      return {routes}  
+      return {routes, routerPush}  
     }
 }
 </script>

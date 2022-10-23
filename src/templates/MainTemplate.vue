@@ -1,6 +1,7 @@
 <template>
     <div class="main__template">
         <Header/>
+        <slot></slot>
     </div>
 </template>
 
