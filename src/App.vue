@@ -57,6 +57,10 @@ font-style: normal;
   color: #2c3e50;
 }
 
+.page__content{
+  width: 700px;
+}
+
 a:link {
   color: #3c6e71;
   background-color: transparent;
