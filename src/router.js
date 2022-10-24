@@ -5,10 +5,10 @@ const testRoutres = [
 ]
 
 const routes = [
-    
     {
         name: "auth",
         path: "/auth",
+        component: () => import('./pages/Auth.vue')
     },
     {
         name: "about",

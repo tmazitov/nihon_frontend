@@ -1,18 +1,49 @@
 <template>
 <div class="app">
-  <MainTemplate>
+
+  <!-- Main temlate pages -->
+  <span v-if="choiceTemplate() == 'main'">
+    <MainTemplate>
+      <router-view></router-view>
+    </MainTemplate>
+  </span>
+
+
+  <!-- No temlate pages -->
+  <span v-if="choiceTemplate() == null">
     <router-view></router-view>
-  </MainTemplate>
+  </span>
+
 </div>
 </template>
 
 <script>
+import { useRoute } from 'vue-router'
 import MainTemplate from './templates/MainTemplate.vue'
+
+const noTemplatePathNames = [
+  'auth'
+]
 
 export default {
   name: 'App',
   components: {
     MainTemplate
+  },
+  setup(){
+    
+    const route = useRoute()
+
+    const choiceTemplate = () => {
+
+      if (noTemplatePathNames.includes(route.name)){
+        return null
+      }
+
+      return "main"
+    }
+
+    return {choiceTemplate: choiceTemplate}
   }
 }
 </script>
@@ -24,6 +55,26 @@ font-weight: 400;
 font-style: normal;
 
   color: #2c3e50;
+}
+
+a:link {
+  color: #3c6e71;
+  background-color: transparent;
+}
+
+h1{
+  margin: 0;
+}
+
+a:visited {
+  color: #3c6e71;
+  background-color: transparent;
+}
+
+.fcc{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 body{

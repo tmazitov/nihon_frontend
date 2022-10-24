@@ -23,6 +23,7 @@ const routerPush = (pathName) => {
 }
 
 const routes = [
+
     {
         title: "About",
         pathName: "about"  
@@ -34,6 +35,10 @@ const routes = [
     {
         title: "Profile",
         pathName: "profile"
+    },
+    {
+        title: "Auth",
+        pathName: "auth"  
     },
 ]
 
