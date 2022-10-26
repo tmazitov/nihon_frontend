@@ -1,7 +1,7 @@
 <template>
     <div class="header">
         <div class="logo">
-            日本の辞書
+            Nihon
         </div>
         <div class="routes">
             <div class="route__item"
@@ -69,9 +69,9 @@ export default {
     height: inherit;
     width: 200px;
 
-    font-family: 'Kiwi Maru', serif;
-    font-weight: 500;
+    font-weight: 700;
     font-size: 28px;
+    color: wheat;
 
     position: absolute;
     display: flex;

@@ -63,7 +63,8 @@ font-style: normal;
 
 .card{
     border-radius: 7px;
-    background: #e1e1e1;
+    background: white;
+    border: 2.5px solid #e1e1e1;
     margin-top: 32px;
     padding: 15px;
 }
