@@ -61,6 +61,18 @@ font-style: normal;
   width: 700px;
 }
 
+.card{
+    border-radius: 7px;
+    background: #e1e1e1;
+    margin-top: 32px;
+    padding: 15px;
+}
+
+.main__title{
+  font-size: 28px;
+  font-weight: 600;
+}
+
 a:link {
   color: #3c6e71;
   background-color: transparent;

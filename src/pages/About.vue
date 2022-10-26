@@ -4,7 +4,7 @@
             <div class="fcc title__cont card">
                 <div class="title">Nihon</div>
                 <div class="descriprion">
-                    Application for learning and repeating words. Test your knowledge of words
+                    Application for learning and repeating words. Test your knowledges!
                 </div>
             </div>
 
@@ -27,12 +27,7 @@ export default {
 </script>
 
 <style scoped>
-.card{
-    border-radius: 7px;
-    background: #e1e1e1;
-    margin-top: 32px;
-    padding: 15px;
-}
+
 .about__page{
     flex-direction: column;
 }

@@ -1,8 +1,10 @@
 <template>
-    <div class="dictionary__page">
-        <h1>
-            Dictionary
-        </h1>
+    <div class="fcc dictionary__page">
+        <div class="page__content">
+            <div class="dictionary card">
+                <div class="main__title">Dictionary</div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -11,3 +13,9 @@ export default {
     name: 'DictionaryPage'
 }
 </script>
+
+<style scoped>
+.dictionary{
+    height: 350px;
+}
+</style>                                
