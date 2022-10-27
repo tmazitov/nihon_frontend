@@ -17,12 +17,14 @@
 </template>
 
 <script>
-import {reactive} from 'vue'
+import {onBeforeMount, reactive} from 'vue'
+import Dictioary from '../api/test'
 
 export default {
     name: 'DictionaryPage',
-    setup() {   
-        const dictionaries = reactive([
+    setup() { 
+
+        let dictionaries = reactive([
             {
                 title: "Japanese pets",
                 wordsCount: 17,
@@ -32,6 +34,14 @@ export default {
                 wordsCount: 12,
             }
         ])
+        
+        onBeforeMount(() => {
+            Dictioary.getAll().then((response) => {
+                const data = response.data
+                dictionaries = data
+            })
+        })
+
 
         return {dictionaries}
     }
