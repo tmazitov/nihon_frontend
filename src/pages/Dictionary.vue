@@ -5,10 +5,10 @@
                 <div class="main__title">Dictionary</div>
                 <div class="dictionary__content">
                     <div class="dictionary__item"
-                    v-for="dict, index in dictionaries" 
+                    v-for="dict, index in state.dictionaries" 
                     :key="`dictionary__${index}`">
-                        <div class="title">{{dict.title}}</div>
-                        <div class="count">Words: {{dict.wordsCount}}</div>
+                        <div class="title">{{dict.Title}}</div>
+                        <div class="count">Words: {{dict.WordsCount}}</div>
                     </div>
                 </div>
             </div>
@@ -18,32 +18,24 @@
 
 <script>
 import {onBeforeMount, reactive} from 'vue'
-import Dictioary from '../api/test'
+import DMS from '../api/DMS.js'
 
 export default {
     name: 'DictionaryPage',
     setup() { 
 
-        let dictionaries = reactive([
-            {
-                title: "Japanese pets",
-                wordsCount: 17,
-            },
-            {
-                title: "English family",
-                wordsCount: 12,
-            }
-        ])
+        let state = reactive({})
         
         onBeforeMount(() => {
-            Dictioary.getAll().then((response) => {
+            DMS.getAll().then((response) => {
                 const data = response.data
-                dictionaries = data
+                console.log('data', data)
+                state.dictionaries = data
             })
         })
 
 
-        return {dictionaries}
+        return {state}
     }
 }
 </script>
