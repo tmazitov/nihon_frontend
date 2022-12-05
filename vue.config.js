@@ -6,9 +6,9 @@ module.exports = {
         // host: "localhost",
         port: process.env.VUE_APP_LISTENER_PORT,
         proxy: {
-            "^/dms": {
+            "^/aaa": {
                 target: "http://localhost:8000"
             },
         },
     },
-};
+}
