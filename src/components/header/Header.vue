@@ -69,7 +69,7 @@ export default {
     width: 100%;
     height: 70px;
     position: relative;
-    background: #3c6e71;
+    background: #0C7478 ;
 }
 
 .routes{

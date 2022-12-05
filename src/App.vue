@@ -55,11 +55,12 @@ export default {
 
 <style>
 #app {
-font-family: rubik, sans-serif;
-font-weight: 400;
-font-style: normal;
-
+  font-family: rubik, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  background: #E7F1F2;
   color: #2c3e50;
+  height: 100vh;
 }
 
 .page__content{
