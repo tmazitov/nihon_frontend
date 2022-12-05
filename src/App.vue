@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 import MainTemplate from './templates/MainTemplate.vue'
 
@@ -31,8 +32,12 @@ export default {
     MainTemplate
   },
   setup(){
-    
+    const store = useStore()
     const route = useRoute()
+
+    if (store.getters.isLogin){
+      store.dispatch('set-user-info')
+    }
 
     const choiceTemplate = () => {
 
