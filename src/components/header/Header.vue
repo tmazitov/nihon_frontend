@@ -10,13 +10,22 @@
             :key="`route_item_${index}`">
                 {{route.title}}
             </div>
+            <div v-if="isLogin" class="route__item"
+            @click="routerPush('profile')">
+                {{user.Nickname}}
+            </div>
+            <div v-else class="route__item"
+            @click="routerPush('auth')">
+                Auth
+            </div>
         </div>
     </div>
 </template>
 
 <script>
 import router from '../../router'
-
+import { useStore } from 'vuex'
+import { ref , reactive} from 'vue'
 
 const routerPush = (pathName) => {
     router.push({name: pathName})
@@ -32,20 +41,24 @@ const routes = [
         title: "Dictionary",
         pathName: "dictionary" 
     },
-    {
-        title: "Profile",
-        pathName: "profile"
-    },
-    {
-        title: "Auth",
-        pathName: "auth"  
-    },
+
 ]
 
 export default {
     name: 'Header',
     setup() {
-      return {routes, routerPush}  
+        const store = new useStore()
+        
+        const isLogin = ref(store.getters.isLogin)
+        const user = reactive({
+            Nickname : ""
+        })
+
+        store.getters.getNickname().then(nickname => {
+            user.Nickname = nickname
+        })
+
+        return {isLogin, routes, routerPush, user}  
     }
 }
 </script>
