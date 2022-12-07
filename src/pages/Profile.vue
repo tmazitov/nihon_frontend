@@ -54,7 +54,7 @@
             <div class="field">
                 <div class="label">Выйгранных состязаний:</div>
             </div> -->
-            <div class="submit__button" v-if="dataIsChanched()" @click="submitChanges">
+            <div class="submit__button" v-if="dataIsChanched" @click="submitChanges">
                 Save
             </div>
         </div>
@@ -62,9 +62,11 @@
 </template>
 
 <script>
-import { ref, reactive } from 'vue';
+import { ref, reactive, computed } from 'vue';
 import { useStore } from 'vuex';
 import AAA from '../api/AAA';
+
+const titles = ["Имя:", "Фамилия:", "Деятельность:", "О себе:"]
 
 export default {
     name: 'ProfilePage',
@@ -73,9 +75,8 @@ export default {
         const user = reactive({
             nickname: "",
             details: {},
+            initial: {},
         })
-
-        const initialValues = []
 
         const submitChanges = () => {
             AAA.user.putDetails({
@@ -83,25 +84,32 @@ export default {
                 LastName : user.details.LastName.value,
                 JobName : user.details.JobName.value,
                 About : user.details.About.value,
+            }).then( (_) => {
+                Object.keys(user.details).forEach((fieldName) => {
+                    if (user.initial[fieldName] != user.details[fieldName].value){
+                        user.initial[fieldName] = user.details[fieldName].value
+                    }
+                })
             })
         }
         
-        const dataIsChanched = () => {
-            return Object.values(user.details).find((detail, index) => {
-                return detail.value != initialValues[index]
-            }) !== undefined
-        }
+        const dataIsChanched = computed(() => {
+            let changed = Object.keys(user.details).find((fieldName) => {
+                return user.details[fieldName].value != user.initial[fieldName]
+            })
+            return changed !== undefined
+        })
 
-        const titles = ["Имя:", "Фамилия:", "Деятельность:", "О себе:"]
+
 
         store.getters.getUser().then(({nick, uid}) => {
             user.nickname = nick
             AAA.user.getDetails(uid).then(({data}) => {
-                Object.keys(data).forEach((field, index) => {
-                    initialValues.push(data[field])
-                    user.details[field] = {
+                Object.keys(data).forEach((fieldName, index) => {
+                    user.initial[fieldName] = data[fieldName]
+                    user.details[fieldName] = {
                         title : titles[index],
-                        value : data[field],
+                        value : data[fieldName],
                         isEdit : false,
                         isHover : false,
                     }
