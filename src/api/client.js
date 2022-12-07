@@ -74,8 +74,10 @@ client.interceptors.response.use(
                     .then((response) => {
                         console.log('newtokenpair', response)
 
-                        let tokenPair = response.data
-                        console.log('tokenPair2:', tokenPair)
+                        let tokenPair = {
+                            accessToken: response.data.Access,
+                            refreshToken: response.data.Access,
+                        }
                         TokenService.set(tokenPair)
                         originalRequest.headers.Authorization = tokenPair.accessToken
                         processQueue(null, tokenPair.accessToken);

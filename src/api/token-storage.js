@@ -10,8 +10,8 @@ class TokenService {
             .then((response) => {
                 let data = response.data
                 let tokenPair = {
-                    refreshToken: data.refreshToken,
-                    accessToken: data.accessToken
+                    refreshToken: data.Refresh,
+                    accessToken: data.Access
                 }
 
                 this.set(tokenPair)

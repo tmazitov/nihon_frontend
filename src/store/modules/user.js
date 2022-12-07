@@ -20,17 +20,16 @@ export default {
         }
     },  
     getters: {
-        Nickname: (state) => {
-            return state.NickName
-        },
-        getNickname: (state) => () => {
+        getUser: (state) => () => {
             return new Promise((success, _) => {
                 setInterval(() => {
-
                     if (state.NickName != ""){
-                        success(state.NickName)
+                        success({
+                            nick : state.NickName,
+                            uid : state.Uid
+                        })
                     }
-                }, 100, state)
+                }, 50, state)
             })
         },
         isLogin: (state) => {
@@ -39,7 +38,7 @@ export default {
     },
     actions: {
         'set-user-info': async(context, _) => {
-            AAA.getUserProfile().then(({data}) => {
+            AAA.user.get().then(({data}) => {
                 if (!data.NickName){
                     return
                 }

@@ -1,6 +1,7 @@
 import axios from 'axios'
-import client from './client'
+import User from './user.js'
 import TokenService from './token-storage.js'
+
 const auth = axios.create({
     baseURL: "/aaa/api/auth",
 })
@@ -32,13 +33,7 @@ class AAA {
         })
     }
 
-    static getUserProfile(uid=""){
-        let userData = ""
-        if (uid){
-            userData = `?uid=${uid}`
-        }
-        return client.get('/aaa/api/user' + userData)
-    }
+    static user = User
 }
 
 export default AAA

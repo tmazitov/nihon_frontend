@@ -54,8 +54,8 @@ export default {
             Nickname : ""
         })
 
-        store.getters.getNickname().then(nickname => {
-            user.Nickname = nickname
+        store.getters.getUser().then(({nick}) => {
+            user.Nickname = nick
         })
 
         return {isLogin, routes, routerPush, user}  
@@ -102,6 +102,6 @@ export default {
 }
 
 .route__item:hover {
-    background: #353535;
+    background: #0A5D60;
 }
 </style>

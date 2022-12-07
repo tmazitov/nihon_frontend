@@ -4,18 +4,32 @@
             <div class="head__content">
                 <div class="avatar__cont"></div>
                 <div class="user_main_info">
-                    <div class="nickname">{{nickname}}</div>
-                    <div class="field">
-                        <div class="label">Имя:</div>
-                        Рустам
-                    </div>
-                    <div class="field">
-                        <div class="label">Фамилия:</div>
-                        Ниязов
-                    </div>
-                    <div class="field">
-                        <div class="label">Деятельность:</div>
-                        Преподаватель иностранных языков
+                    <div class="nickname">{{user.nickname}}</div>
+                    
+                    <div class="field" v-for="field,index in user.details" :key="`field_detail_${index}`">
+                        <div class="label">{{field.title}}</div>
+                        <div class="content"
+                            v-if="(field.value && !field.isEdit)"
+                            @mouseover="field.isHover = true" 
+                            @mouseleave="field.isHover = false"
+                            @click="() => {
+                                field.isEdit = true
+                                field.isHover = false
+                            }"
+                            >
+                            <div>
+                                {{field.value}}
+                            </div>
+                            <div class="edit__selector" v-show="field.isHover">
+                                <span class="iconify" data-icon="material-symbols:edit" data-width="16" data-height="16"></span>
+                            </div>
+                        </div>
+                        <div v-else>
+                            <input type="text"  
+                            @input="onEdit" 
+                            @focusout="field.isEdit = false"
+                            v-model="field.value">
+                        </div>
                     </div>
 
                     <div class="field">
@@ -29,10 +43,6 @@
                         </div>
                     </div>
 
-                    <div class="field">
-                        <div class="label">О себе:</div>
-                        Ничего
-                    </div>
                 </div>
             </div>
             <!-- <div class="field">
@@ -44,7 +54,9 @@
             <div class="field">
                 <div class="label">Выйгранных состязаний:</div>
             </div> -->
-
+            <div class="submit__button" v-if="dataIsChanched()" @click="submitChanges">
+                Save
+            </div>
         </div>
     </div>
 </template>
@@ -52,13 +64,50 @@
 <script>
 import { ref, reactive } from 'vue';
 import { useStore } from 'vuex';
+import AAA from '../api/AAA';
 
 export default {
     name: 'ProfilePage',
     setup(){
         const store = useStore()
-        const nickname = ref("")
-        store.getters.getNickname().then(nick => nickname.value = nick)
+        const user = reactive({
+            nickname: "",
+            details: {},
+        })
+
+        const initialValues = []
+
+        const submitChanges = () => {
+            AAA.user.putDetails({
+                FirstName : user.details.FirstName.value,
+                LastName : user.details.LastName.value,
+                JobName : user.details.JobName.value,
+                About : user.details.About.value,
+            })
+        }
+        
+        const dataIsChanched = () => {
+            return Object.values(user.details).find((detail, index) => {
+                return detail.value != initialValues[index]
+            }) !== undefined
+        }
+
+        const titles = ["Имя:", "Фамилия:", "Деятельность:", "О себе:"]
+
+        store.getters.getUser().then(({nick, uid}) => {
+            user.nickname = nick
+            AAA.user.getDetails(uid).then(({data}) => {
+                Object.keys(data).forEach((field, index) => {
+                    initialValues.push(data[field])
+                    user.details[field] = {
+                        title : titles[index],
+                        value : data[field],
+                        isEdit : false,
+                        isHover : false,
+                    }
+                })
+            })
+        })
 
         const languages = reactive([
             {title: "Английский"},
@@ -67,8 +116,10 @@ export default {
         ])
 
         return {
-            nickname : nickname,
-            languages
+            languages,
+            user,
+            dataIsChanched,
+            submitChanges,
         }
     }
 }
@@ -121,6 +172,18 @@ export default {
     gap:10px;
 }
 
+.field > .content{
+    cursor: pointer;
+    border-bottom: 1px solid white;
+    display: flex;
+    gap:5px;
+}
+
+.field > .content:hover{
+    border-color: #0C7478;;
+}
+
+
 .field > .label {
     font-weight: 600;
     color: rgb(170, 170, 170);
@@ -146,7 +209,16 @@ export default {
     color: white;
 }
 
-
+.submit__button{
+    background: #0C7478;
+    color: white;
+    padding: 7px 25px;
+    width:140px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 7px;
+}
 
 </style>
 
